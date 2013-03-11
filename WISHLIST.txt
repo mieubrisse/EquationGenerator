@@ -1,0 +1,5 @@
+- Change addition to use subtraction notation when adding negative number
+- Make multiplication and division format prettier
+- Add ability to format output equation in LaTeX format
+- Add scaling to the constants that are generated for an operation
+- Add exp, log, sin, cos, tan
