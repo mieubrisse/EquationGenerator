@@ -12,12 +12,15 @@ import inspect
 #         "division" : 3
 #         }
 
-class Operators:
+class OperatorSymbols:
     ADDITION = "addition"
     MULTIPLICATION = "multiplication"
     DIVISION = "division"
+
+class RenderSymbols:
+    PARENTHESIS = "parenthesis"
     
-operators = [obj for name, obj in inspect.getmembers(Operators) if not name.startswith("__") and not inspect.isroutine(obj)]
+operators = [obj for name, obj in inspect.getmembers(OperatorSymbols) if not name.startswith("__") and not inspect.isroutine(obj)]
 
 # Extract command line arguments
 arg_parser = argparse.ArgumentParser(description="Generate a hand-solvable equation that solves to the given value")
@@ -69,18 +72,22 @@ def apply_operators(operators_list, expression, value):
     operator = operators_list[0]
 
     # Addition operator
-    if operator == Operators.ADDITION:
+    if operator == OperatorSymbols.ADDITION:
         # TODO Change scale on random constant generated
+        # Don't use zero as an addition operator
         constant = random.randint(-50, 50)
         while constant == 0:
             constant = random.randint(-50, 50)
 
-        new_expression = expression + " + " + str(constant)
+        if (constant > 0):
+            new_expression = expression + " + " + str(constant)
+        else:
+            new_expression = expression + " - " + str(abs(constant))
         new_value = value + constant
         return apply_operators(operators_list[1:], new_expression, new_value)
 
     # Multiplication operator
-    elif operator == Operators.MULTIPLICATION:
+    elif operator == OperatorSymbols.MULTIPLICATION:
         # TODO Change scale on random constant generated
         constant = random.randint(-50, 50)
 
@@ -89,13 +96,15 @@ def apply_operators(operators_list, expression, value):
         return apply_operators(operators_list[1:], new_expression, new_value)
 
     # Division operator
-    elif operator == Operators.DIVISION:
+    elif operator == OperatorSymbols.DIVISION:
         # TODO Change scale on random constant generated
         constant = random.choice(factors(value))
 
         new_expression = "(" + expression + ") / " + str(constant)
         new_value = value / constant
         return apply_operators(operators_list[1:], new_expression, new_value)
+
+    # Parenthesis renderer
 
 
 expression, value = apply_operators(operators_list, "x", command_args.eq_value)

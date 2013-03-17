@@ -1,5 +1,11 @@
-- Change addition to use subtraction notation when adding negative number
 - Make multiplication and division format prettier
 - Add ability to format output equation in LaTeX format
 - Add scaling to the constants that are generated for an operation
 - Add exp, log, sin, cos, tan
+- Change the way complexity works - pick how many of which subset of operations will be applied
+- Cache results of factor-finding, so it doesn't have to be redone
+- Allow recursive expression-making -- represent constants as an expression
+
+DONE
+- Change addition to use subtraction notation when adding negative number
+
